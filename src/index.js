@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+import BlogApp from './BlogApp';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <BlogApp />
   </React.StrictMode>,
   document.getElementById('root')
 );
