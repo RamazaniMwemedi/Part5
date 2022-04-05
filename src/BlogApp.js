@@ -24,6 +24,8 @@ const BlogApp = () => {
      }
    };
 
+   
+
   useEffect(() => {
     blogService.getAll().then((blogs) => setBlogs(blogs));
   }, []);
@@ -57,10 +59,23 @@ const BlogApp = () => {
   );
   return (
     <div>
-      {user === null ? null : <div>
-        <h2>blogs</h2>
-        <h4>{user.name} logged in</h4>
-        </div>}
+      {user === null ? null : (
+        <div>
+          <h2>blogs</h2>
+          <h4>
+            {user.name} logged in{" "}
+            <button
+              type="reset"
+              onClick={() =>{
+                window.localStorage.removeItem("loggedNoteappUser")
+                setUser(null)
+              }}
+            >
+              logout
+            </button>
+          </h4>
+        </div>
+      )}
       {user === null
         ? loginForm()
         : blogs.map((blog) => <Blog key={blog.id} blog={blog} />)}
