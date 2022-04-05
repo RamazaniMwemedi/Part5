@@ -6,7 +6,6 @@ const BlogApp = () => {
   // States
   const [blogs, setBlogs] = useState([]);
   const [user, setUser] = useState(null);
-  console.log("user", user);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -32,7 +31,7 @@ const BlogApp = () => {
       setUsername("");
       setPassword("");
     } catch (exception) {
-      console.log(exception);
+      setError(exception.response.data.error);
     }
   };
 
@@ -65,6 +64,7 @@ const BlogApp = () => {
     <>
       <h2>Log in to application</h2>
       <form onSubmit={handleLogin}>
+      {error.length > 0 && errorNotification()}
         <div>
           username
           <input
