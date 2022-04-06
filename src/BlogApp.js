@@ -131,9 +131,7 @@ const BlogApp = () => {
   const App = ({ blogs, message}) => {
     return (
       <>
-        {message.length > 0 && setTimeout(() => {
-          notification();
-        }, 3000)}
+        {message.length > 0 && notification()}
         {blogForm()}
         
         {blogs.map((blog) => (
