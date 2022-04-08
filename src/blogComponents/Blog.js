@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import blogServices from "../services/blogs";
 
 const Blog = ({ blog }) => {
   const [showMore, setShowMore] = useState(false);
@@ -44,6 +45,14 @@ const More = ({ blog }) => {
       });
   };
 
+  const handleDelete = () => {
+    if (window.confirm(`Delete ${blog.title} by ${blog.author}?`)) {
+      blogServices.deleteBlog(blog.id).then(() => {
+        console.log("Blog deleted");
+      });
+    }
+  };
+
   return (
     <>
       <div>{blog.url}</div>
@@ -51,6 +60,7 @@ const More = ({ blog }) => {
         likes {blog.likes} <button onClick={handleLike}>like</button>
       </div>
       <div>{blog.user.name}</div>
+      <button onClick={handleDelete}>remove</button>
     </>
   );
 };
