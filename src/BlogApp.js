@@ -10,10 +10,10 @@ const BlogApp = () => {
   const [user, setUser] = useState(null);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [message, setMessage]= useState("")
-  const [error, setError]= useState("")
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
 
-  const blogFormRef = useRef()
+  const blogFormRef = useRef();
 
   // Handlers
 
@@ -35,16 +35,22 @@ const BlogApp = () => {
   };
 
   const addNewBlog = async (blogObject) => {
-    
     try {
       const returnedBlog = await blogService.create(blogObject);
       blogFormRef.current.toggleVisibility();
-      setMessage(`a new blog ${returnedBlog.title} by ${returnedBlog.author} added`)
+      setMessage(
+        `a new blog ${returnedBlog.title} by ${returnedBlog.author} added`
+      );
+      setTimeout(() => {
+        setMessage("");
+      }, 5000);
+
       setBlogs(blogs.concat(returnedBlog));
     } catch (exception) {
       console.log(exception);
     }
   };
+  console.log("The message is ", message);
   // Effects Hooks
 
   useEffect(() => {
@@ -64,7 +70,7 @@ const BlogApp = () => {
     <>
       <h2>Log in to application</h2>
       <form onSubmit={handleLogin}>
-      {error.length > 0 && errorNotification()}
+        {error.length > 0 && errorNotification()}
         <div>
           username
           <input
@@ -88,18 +94,16 @@ const BlogApp = () => {
     </>
   );
 
-  
-
   const notification = () => <div className="notification">{message}</div>;
 
   const errorNotification = () => <div className="error">{error}</div>;
 
-  const App = ({ blogs, message}) => {
+  const App = ({ blogs, message }) => {
     return (
       <>
         {message.length > 0 && notification()}
-        
-        <Togglable buttonLabel="add new note">
+
+        <Togglable buttonLabel="add new blog" ref={blogFormRef}>
           <BlogForm createNote={addNewBlog} />
         </Togglable>
         {blogs.map((blog) => (
