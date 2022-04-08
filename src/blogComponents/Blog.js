@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axios from "axios";
 
 const Blog = ({ blog }) => {
   const [showMore, setShowMore] = useState(false);
@@ -24,12 +25,32 @@ const Blog = ({ blog }) => {
 };
 
 export default Blog;
-const More = ({ blog }) => (
-  <>
-    <div>{blog.url}</div>
-    <div>
-      likes {blog.likes} <button>like</button>
-    </div>
-    <div>{blog.user.name}</div>
-  </>
-);
+const More = ({ blog }) => {
+  const handleLike = () => {
+    const blogObject = {
+      title: blog.title,
+      author: blog.author,
+      url: blog.url,
+      likes: blog.likes + 1,
+      user: blog.user.id,
+    };
+    axios
+      .put(`http://localhost:3001/api/blogs/${blog.id}`, blogObject)
+      .then((response) => {
+        blog.likes = response.data.likes;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  return (
+    <>
+      <div>{blog.url}</div>
+      <div>
+        likes {blog.likes} <button onClick={handleLike}>like</button>
+      </div>
+      <div>{blog.user.name}</div>
+    </>
+  );
+};

@@ -66,6 +66,7 @@ const BlogApp = () => {
     blogService.getAll().then((blogs) => setBlogs(blogs));
   }, []);
 
+  
   const loginForm = () => (
     <>
       <h2>Log in to application</h2>
